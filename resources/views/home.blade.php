@@ -5,28 +5,29 @@
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                @for ($i = 0; $i < 9; $i++)
+
+                @if (count($blogs) < 1)
+                    <div class="m-auto">
+                        <h4 class="text-center">No blogs found...</h4>
+                    </div>
+                @endif
+
+                @foreach ($blogs as $blog)
                     <div class="col">
                         <div class="card shadow-sm">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                                preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>Placeholder</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                            </svg>
+                            <img src="{{ asset('storage/' . $blog->thumbnail) }}" alt="{{ $blog->title }}" width="100%"
+                                height="225">
                             <div class="card-body">
-                                <h4 class="card-title">Lorem ipsum dolor sit amet.</h4>
-                                <p class="card-text">This is a wider card with supporting text below as a natural
-                                    lead-in to
-                                    additional content. This content is a little bit longer.</p>
+                                <h4 class="card-title">{{ $blog->title }}</h4>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a href="">Read more</a>
-                                    <small class="text-body-secondary">9 mins</small>
+                                    <a style="font-size: 14px" href="{{ $blog->title . '/' . $blog->id }}">Read more</a>
+                                    <small class="text-body-secondary">By {{ $blog->author->name }}</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endfor
+                @endforeach
+
             </div>
         </div>
     </div>
