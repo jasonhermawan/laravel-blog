@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
@@ -15,7 +16,7 @@ class BlogController extends Controller
         return view('home', compact('blogs'));
     }
 
-    public function detail($slug, $id)
+    public function detail($id)
     {
         $blog = Blog::with('author')->findOrFail($id);
 
@@ -39,6 +40,36 @@ class BlogController extends Controller
             ['author_id' => $authorId]
         ));
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard.list')->with('success', 'Blog created');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $blog = Blog::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        if ($request->hasFile('thumbnail')) {
+            $validatedData['thumbnail'] = $request->file('thumbnail')->store('thumbnails');
+            Storage::delete($blog->thumbnail);
+        }
+
+        $blog->update($validatedData);
+
+        return redirect()->route('dashboard.list')->with('success', 'Blog updated');
+    }
+
+    public function destroy(string $id)
+    {
+        $blog = Blog::findOrFail($id);
+
+        Storage::delete($blog->thumbnail);
+
+        $blog->delete();
+
+        return redirect()->route('dashboard.list')->with('success', 'Blog deleted');
     }
 }

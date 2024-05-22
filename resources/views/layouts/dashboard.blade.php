@@ -12,7 +12,7 @@
     <style type="text/css">
         .ck-editor__editable_inline
         {
-            height: 450px;
+            min-height: 300px;
         }
     </style>
 </head>
@@ -23,7 +23,7 @@
         <x-sidebar></x-sidebar>
 
         {{-- Content --}}
-        <div class="py-5 w-100 px-5" style="margin-left: 300px">
+        <div class="py-5 w-100 px-5" style="margin-left: 300px;">
             @yield('content')
         </div>
     </div>

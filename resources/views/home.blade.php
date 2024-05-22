@@ -20,8 +20,8 @@
                             <div class="card-body">
                                 <h4 class="card-title">{{ $blog->title }}</h4>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a style="font-size: 14px" href="{{ $blog->title . '/' . $blog->id }}">Read more</a>
-                                    <small class="text-body-secondary">By {{ $blog->author->name }}</small>
+                                    <a style="font-size: 14px" href="{{ 'blog/' . $blog->id }}">Read more</a>
+                                    <small class="text-body-secondary">{{ $blog->created_at->diffForHumans() }}</small>
                                 </div>
                             </div>
                         </div>
