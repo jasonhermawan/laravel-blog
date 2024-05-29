@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -19,8 +20,10 @@ class BlogController extends Controller
     public function detail($id)
     {
         $blog = Blog::with('author')->findOrFail($id);
+        $blogs = Blog::with('author')->whereNotIn('id', [$id])->get();
+        $comments = Comment::with('user')->where('blog_id', $id)->get();
 
-        return view('blog', compact('blog'));
+        return view('blog', compact('blog', 'blogs', 'comments'));
     }
 
     public function store(Request $request)

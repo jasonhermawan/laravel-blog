@@ -17,7 +17,7 @@
                 method="POST" enctype="multipart/form-data">
                 @csrf
                 @if (isset($blog))
-                    @method('PUT')
+                    @method('put')
                 @endif
                 <div class="d-flex gap-4">
                     <div class="w-100">

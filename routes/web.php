@@ -3,7 +3,9 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BlogController::class, 'index'])->name('home');
@@ -36,4 +38,13 @@ Route::middleware(['auth'])->group(function () {
     // Route for listing user's blogs
     Route::get('/dashboard/my-blogs', [DashboardController::class, 'index'])->name('dashboard.list');
 
+    // Route for posting comments
+    Route::post('/comment/{blogId}', [CommentController::class, 'store'])->name('comment.post');
+
+    // Route for deleting comment
+    Route::delete('/comment/{id}', [CommentController::class, 'destroy'])->name('comment.delete');
+
+    // Account Settings
+    Route::get('/dashboard/account', [UserController::class, 'index'])->name('account');
+    Route::put('/dashboard/account/{id}', [UserController::class, 'update'])->name('account.update');
 });

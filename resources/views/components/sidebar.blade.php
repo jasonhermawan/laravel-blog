@@ -23,12 +23,21 @@
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
             data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="" width="32" height="32"
-                class="rounded-circle me-2">
-            <strong>mdo</strong>
+            <div class="d-flex gap-2 align-items-center">
+                @if (Auth::user()->avatar)
+                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="avatar" width="32"
+                        height="32" class="rounded-circle" style="object-fit: cover">
+                @else
+                    <div class="rounded-circle"
+                        style="width: 32px; height: 32px; background-color: #adb5bd; color: #fff; display: flex; justify-content: center; align-items: center; text-transform: uppercase;">
+                        {{ substr(Auth::user()->name, 0, 1) }}
+                    </div>
+                @endif
+                <strong>{{ Auth::user()->name }}</strong>
+            </div>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li><a class="dropdown-item" href="">Account Settings</a></li>
+            <li><a class="dropdown-item" href="{{ route('account') }}">Account Settings</a></li>
             <li>
                 <hr class="dropdown-divider">
             </li>
